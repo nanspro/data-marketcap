@@ -1,0 +1,6 @@
+Flask==1.1.2
+Flask-Cors==3.0.9
+Jinja2==2.11.2
+ocean-contracts==0.4.4
+ocean-lib==0.4.3
+ocean-utils==0.4.2
