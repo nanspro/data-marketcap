@@ -24,33 +24,33 @@ print(token_address)
 # `ocean.assets.create` will require that token_address is a valid DataToken contract address, unless token_address
 # is not provided then the `create` method will first create a new data token and use it in the new
 # asset.
-metadata =  {
-    "main": {
-        "type": "dataset", "name": "Monkey Species Data", "author": "Rahul", 
-        "license": "CC0: Public Domain", "dateCreated": "2020-02-01T10:55:11Z", 
-        "files": [
-            { "index": 0, "contentType": "application/zip", "url": "https://s3.amazonaws.com/datacommons-seeding-us-east/10_Monkey_Species_Small/assets/training.zip"},
-            { "index": 1, "contentType": "text/text", "url": "https://s3.amazonaws.com/datacommons-seeding-us-east/10_Monkey_Species_Small/assets/monkey_labels.txt"},
-            { "index": 2, "contentType": "application/zip", "url": "https://s3.amazonaws.com/datacommons-seeding-us-east/10_Monkey_Species_Small/assets/validation.zip"}]}
-}
+# metadata =  {
+#     "main": {
+#         "type": "dataset", "name": "Monkey Species Data", "author": "Rahul", 
+#         "license": "CC0: Public Domain", "dateCreated": "2020-02-01T10:55:11Z", 
+#         "files": [
+#             { "index": 0, "contentType": "application/zip", "url": "https://s3.amazonaws.com/datacommons-seeding-us-east/10_Monkey_Species_Small/assets/training.zip"},
+#             { "index": 1, "contentType": "text/text", "url": "https://s3.amazonaws.com/datacommons-seeding-us-east/10_Monkey_Species_Small/assets/monkey_labels.txt"},
+#             { "index": 2, "contentType": "application/zip", "url": "https://s3.amazonaws.com/datacommons-seeding-us-east/10_Monkey_Species_Small/assets/validation.zip"}]}
+# }
 
-# Prepare attributes for the download service including the cost in DataTokens
-service_attributes = {
-        "main": {
-            "name": "dataAssetAccessServiceAgreement",
-            "creator": alice_wallet.address,
-            "cost": 1.0, # service cost is 1.0 tokens 
-            "timeout": 3600 * 24,
-            "datePublished": metadata["main"]['dateCreated']
-        }
-    }
+# # Prepare attributes for the download service including the cost in DataTokens
+# service_attributes = {
+#         "main": {
+#             "name": "dataAssetAccessServiceAgreement",
+#             "creator": alice_wallet.address,
+#             "cost": 1.0, # service cost is 1.0 tokens 
+#             "timeout": 3600 * 24,
+#             "datePublished": metadata["main"]['dateCreated']
+#         }
+#     }
 
-service_endpoint = DataServiceProvider.get_download_endpoint(ocean.config)
-download_service = ServiceDescriptor.access_service_descriptor(service_attributes, service_endpoint)
-asset = ocean.assets.create(metadata, alice_wallet, service_descriptors=[download_service], data_token_address=token_address)
-assert token_address == asset.data_token_address
+# service_endpoint = DataServiceProvider.get_download_endpoint(ocean.config)
+# download_service = ServiceDescriptor.access_service_descriptor(service_attributes, service_endpoint)
+# asset = ocean.assets.create(metadata, alice_wallet, service_descriptors=[download_service], data_token_address=token_address)
+# assert token_address == asset.data_token_address
 
-did = asset.did
-print(did)
+# did = asset.did
+# print(did)
 
-data_token.mint_tokens(alice_wallet.address, 1000.0, alice_wallet)
+# data_token.mint_tokens(alice_wallet.address, 1000.0, alice_wallet)
