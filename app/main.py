@@ -29,12 +29,13 @@ def get_datatokens():
         symbol = value["dataTokenInfo"]["symbol"]
         circulatingSupply = value["dataTokenInfo"]["totalSupply"]
         price = value["price"]["value"]
+        volume = value["price"]["datatoken"] * price
         marketCap = price * circulatingSupply
         # copyrightHolder = value.dig("service", "attributes", "additionalInformation", "copyrightHolder")
         # description = value["service"]["attributes"]["additionalInformation"]["description"]
         # author = value["service"]["attributes"]["main"]["author"]
 
-        token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap}
+        token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "volume": volume}
         tokens.append(token)
     # print(tokens)
     return jsonify(tokens)
@@ -58,8 +59,10 @@ def get_token(did):
     datasetName = data["service"][0]["attributes"]["main"]["name"]
     pools = data["price"]["pools"]
     totalOcean = data["price"]["ocean"]
+    volume = data["price"]["datatoken"]
+    priceOcean = totalOcean/volume
 
-    token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "createdAt": createdAt, "supplyCap": supplyCap, "address": address, "description": description, "tags": tags, "author": author, "datasetName": datasetName, "pools": pools, "totalOcean": totalOcean}
+    token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "createdAt": createdAt, "supplyCap": supplyCap, "address": address, "description": description, "tags": tags, "author": author, "datasetName": datasetName, "pools": pools, "totalOcean": totalOcean, "priceOcean": priceOcean}
 
     # Fetch from aquarius elasticsearch events
     return jsonify(token)
