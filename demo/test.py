@@ -1,7 +1,7 @@
 import requests
 import json
 
-all_ddos = requests.get('https://aquarius.rinkeby.v3.dev-ocean.com/api/v1/aquarius/assets/ddo').json()
+all_ddos = requests.get('https://aquarius.mainnet.oceanprotocol.com/api/v1/aquarius/assets/ddo').json()
 
 print(json.dumps(all_ddos, sort_keys=True, indent=4))
 

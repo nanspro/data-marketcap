@@ -1,0 +1,101 @@
+{
+    "@context": "https://w3id.org/did/v1",
+    "accessWhiteList": [],
+    "authentication": [
+        {
+            "publicKey": "did:op:028e0B27a39FF92Fd30b4b8c310EA745f309cCF3",
+            "type": "RsaSignatureAuthentication2018"
+        }
+    ],
+    "created": "2020-10-29T10:22:41Z",
+    "dataToken": "0x028e0B27a39FF92Fd30b4b8c310EA745f309cCF3",
+    "dataTokenInfo": {
+        "address": "0x028e0B27a39FF92Fd30b4b8c310EA745f309cCF3",
+        "cap": 1000.0,
+        "decimals": 18,
+        "minter": "0xFa0df50f64707104545473eF8E721B7159c3423D",
+        "minterBalance": 26.417798525537314,
+        "name": "Brave Nautilus Token",
+        "symbol": "BRANAU-77",
+        "totalSupply": 54.0
+    },
+    "id": "did:op:028e0B27a39FF92Fd30b4b8c310EA745f309cCF3",
+    "price": {
+        "address": "0xf73112f38aD59B3F0fac204eB8f64436Eee7f4Da",
+        "datatoken": 24.539843292961137,
+        "ocean": 25.662069631232594,
+        "pools": [
+            "0xf73112f38aD59B3F0fac204eB8f64436Eee7f4Da"
+        ],
+        "type": "pool",
+        "value": 12.668301312172588
+    },
+    "proof": {
+        "created": "2020-10-29T10:22:41Z",
+        "creator": "0xFa0df50f64707104545473eF8E721B7159c3423D",
+        "signatureValue": "0x612af96a88a0784a5e9edc1a0493dffc45d64e55860d14bb76ac7eef752ccaf1",
+        "type": "AddressHash"
+    },
+    "publicKey": [
+        {
+            "id": "did:op:028e0B27a39FF92Fd30b4b8c310EA745f309cCF3",
+            "owner": "0xFa0df50f64707104545473eF8E721B7159c3423D",
+            "type": "EthereumECDSAKey"
+        }
+    ],
+    "service": [
+        {
+            "attributes": {
+                "additionalInformation": {
+                    "description": "The following Data set is  useful particularly for research on multiview\n(multimodal) learning, including multiview clustering and/or\nsupervised learning, co-training, early/late fusion, and ensemble\ntechniques.\n\nABOUT THE DATA SET:\n\n-This Data set consists of feature values and class labels for \n120,000 videos.\n\n-There are up to 13 feature types, from 3 high level feature families: textual, visual,\nand auditory features. \n\n-There are 31 class labels, 1 through 31. The first 30 labels correspond to popular video games. \n\n\n\n",
+                    "tags": [
+                        "multimodal",
+                        "data-set",
+                        "machine-learning",
+                        "co-training",
+                        "clusters",
+                        "youtube"
+                    ],
+                    "termsAndConditions": true
+                },
+                "curation": {
+                    "isListed": true,
+                    "numVotes": 0,
+                    "rating": 0.0
+                },
+                "encryptedFiles": "0x049b4f35d0df3232e8388b8a1b97a5a3db7d39de939e4d256a5eb258ce8a9c3a329411095b35690412f38d658b82ffd5c0e9653e6d2f332c6c138c2a0edb75457e00c75a1bb291cbedc7cb4d18ad5bffd711cce607f543098fe1771e2424b1fe383fc1fb7937caea1cf80a7bba923c6404cc9fe6577f4f85ea1d67fe27736b93666e2780b484c9c8e76478866e32f14f8e6479f51721d5f0f8ee4c8ead97db1913acaf8b585864189a79a47996746544709c41ccde4933a1870b8a8ffc70aabca637cdcf9e651c",
+                "main": {
+                    "author": "Madani - Tetration Analytics group",
+                    "dateCreated": "2020-10-29T10:21:59Z",
+                    "datePublished": "2020-10-29T10:23:06Z",
+                    "files": [
+                        {
+                            "contentType": "text/html",
+                            "index": 0
+                        }
+                    ],
+                    "license": "https://market.oceanprotocol.com/terms",
+                    "name": "Youtube Data Set (1 Million Attributes)",
+                    "type": "dataset"
+                }
+            },
+            "index": 0,
+            "type": "metadata"
+        },
+        {
+            "attributes": {
+                "main": {
+                    "cost": "1",
+                    "creator": "0xFa0df50f64707104545473eF8E721B7159c3423D",
+                    "datePublished": "2020-10-29T10:21:59Z",
+                    "name": "dataAssetAccess",
+                    "timeout": 0
+                }
+            },
+            "index": 1,
+            "serviceEndpoint": "https://provider.mainnet.oceanprotocol.com",
+            "type": "access"
+        }
+    ],
+    "updated": "2020-10-29T10:22:41Z"
+}
