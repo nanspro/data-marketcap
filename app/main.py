@@ -1,9 +1,14 @@
 from flask import Flask, request, Response, jsonify
+from flask_pymongo import PyMongo
 from flask_cors import CORS
 import json
 import requests
 
 app = Flask(__name__)
+app.config['MONGO_DBNAME'] = 'restdb'
+app.config['MONGO_URI'] = 'mongodb://localhost:27017/restdb'
+
+mongo = PyMongo(app)
 CORS(app)
 
 class dict(dict):
@@ -16,11 +21,12 @@ class dict(dict):
         except:
           return None
 
-@app.route('/datatokens')
-def get_datatokens():
+@app.route('/update_datatokens', methods=['POST'])
+def update_datatokens():
     data = requests.get('https://aquarius.mainnet.oceanprotocol.com/api/v1/aquarius/assets/ddo')
     data = json.loads(data.content.decode('utf-8'))
-    tokens = []
+    datatokens = mongo.db.datatokens
+    datatoken = mongo.db.datatoken
     for id in data:
         token = {}
         did = id
@@ -35,6 +41,18 @@ def get_datatokens():
         # author = value["service"]["attributes"]["main"]["author"]
 
         token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap}
+        if datatokens.find_one({'did': did}):
+            datatokens.update_one({'did': did}, {"$set": token})
+        else:
+            datatokens.insert(token)
+    return "True"
+
+@app.route('/datatokens', methods=['GET'])
+def get_datatokens():
+    datatokens = mongo.db.datatokens
+    tokens = []
+    for token in datatokens.find():
+        token = {"did": token['did'], "name": token['name'], "symbol": token['symbol'], "circulatingSupply": token['circulatingSupply'], "price": token['price'], "marketCap": token['marketCap']}
         tokens.append(token)
     # print(tokens)
     return jsonify(tokens)

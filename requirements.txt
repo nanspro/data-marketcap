@@ -11,6 +11,9 @@ Flask-Principal==0.4.0
 Flask-Security==3.0.0
 Flask-SQLAlchemy==2.3.2
 Flask-WTF==0.14.2
+Flask-PyMongo==2.3.0
+PyMongo==3.11.0
+
 json5==0.9.1
 jsonschema==3.0.2
 
