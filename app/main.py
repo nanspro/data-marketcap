@@ -35,12 +35,13 @@ def update_datatokens():
         symbol = value["dataTokenInfo"]["symbol"]
         circulatingSupply = value["dataTokenInfo"]["totalSupply"]
         price = value["price"]["value"]
+        volume = value["price"]["datatoken"] * price
         marketCap = price * circulatingSupply
         # copyrightHolder = value.dig("service", "attributes", "additionalInformation", "copyrightHolder")
         # description = value["service"]["attributes"]["additionalInformation"]["description"]
         # author = value["service"]["attributes"]["main"]["author"]
 
-        token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap}
+        token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "volume": volume}
         if datatokens.find_one({'did': did}):
             datatokens.update_one({'did': did}, {"$set": token})
         else:
@@ -52,7 +53,7 @@ def get_datatokens():
     datatokens = mongo.db.datatokens
     tokens = []
     for token in datatokens.find():
-        token = {"did": token['did'], "name": token['name'], "symbol": token['symbol'], "circulatingSupply": token['circulatingSupply'], "price": token['price'], "marketCap": token['marketCap']}
+        token = {"did": token['did'], "name": token['name'], "symbol": token['symbol'], "circulatingSupply": token['circulatingSupply'], "price": token['price'], "marketCap": token['marketCap'], "volume": token['volume']}
         tokens.append(token)
     # print(tokens)
     return jsonify(tokens)
@@ -76,8 +77,10 @@ def get_token(did):
     datasetName = data["service"][0]["attributes"]["main"]["name"]
     pools = data["price"]["pools"]
     totalOcean = data["price"]["ocean"]
+    volume = data["price"]["datatoken"]
+    priceOcean = totalOcean/volume
 
-    token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "createdAt": createdAt, "supplyCap": supplyCap, "address": address, "description": description, "tags": tags, "author": author, "datasetName": datasetName, "pools": pools, "totalOcean": totalOcean}
+    token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "createdAt": createdAt, "supplyCap": supplyCap, "address": address, "description": description, "tags": tags, "author": author, "datasetName": datasetName, "pools": pools, "totalOcean": totalOcean, "priceOcean": priceOcean}
 
     # Fetch from aquarius elasticsearch events
     return jsonify(token)
