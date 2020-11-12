@@ -6,15 +6,12 @@ import requests
 app = Flask(__name__)
 CORS(app)
 
-class dict(dict):
-
-  def dig(self, *keys):
-        try:
-            for key in keys:
-                self = self[key]
-            return self
-        except:
-          return None
+def check_val(dict, key):
+    try:
+        value = dict[key]
+        return True
+    except KeyError:
+        return False
 
 @app.route('/datatokens')
 def get_datatokens():
@@ -31,11 +28,16 @@ def get_datatokens():
         price = value["price"]["value"]
         volume = value["price"]["datatoken"] * price
         marketCap = price * circulatingSupply
+        tags = value["service"][0]["attributes"]["additionalInformation"]
+        if check_val(tags, "tags"):
+            tags = tags["tags"]
+        else:
+            tags = []
         # copyrightHolder = value.dig("service", "attributes", "additionalInformation", "copyrightHolder")
         # description = value["service"]["attributes"]["additionalInformation"]["description"]
         # author = value["service"]["attributes"]["main"]["author"]
 
-        token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "volume": volume}
+        token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "volume": volume, "tags": tags}
         tokens.append(token)
     # print(tokens)
     return jsonify(tokens)
