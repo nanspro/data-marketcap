@@ -64,13 +64,20 @@ def get_token(did):
     price = data["price"]["value"]
     marketCap = price * circulatingSupply
     description = data["service"][0]["attributes"]["additionalInformation"]["description"]
-    tags = data["service"][0]["attributes"]["additionalInformation"]["tags"]
+    tags = data["service"][0]["attributes"]["additionalInformation"]
+    if check_val(tags, "tags"):
+        tags = tags["tags"]
+    else:
+        tags = []
     author = data["service"][0]["attributes"]["main"]["author"]
     datasetName = data["service"][0]["attributes"]["main"]["name"]
     pools = data["price"]["pools"]
     totalOcean = data["price"]["ocean"]
     volume = data["price"]["datatoken"]
-    priceOcean = totalOcean/volume
+    if (volume):
+        priceOcean = totalOcean/volume
+    else:
+        priceOcean = 0
 
     token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "createdAt": createdAt, "supplyCap": supplyCap, "address": address, "description": description, "tags": tags, "author": author, "datasetName": datasetName, "pools": pools, "totalOcean": totalOcean, "priceOcean": priceOcean}
 
