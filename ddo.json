@@ -1,0 +1,112 @@
+{
+    "@context": "https://w3id.org/did/v1",
+    "accessWhiteList": [],
+    "authentication": [
+        {
+            "publicKey": "did:op:b07a8bb80242752ce164560ABCb6517DA90a4F65",
+            "type": "RsaSignatureAuthentication2018"
+        }
+    ],
+    "created": "2020-10-27T14:17:47Z",
+    "dataToken": "0xb07a8bb80242752ce164560ABCb6517DA90a4F65",
+    "dataTokenInfo": {
+        "address": "0xb07a8bb80242752ce164560ABCb6517DA90a4F65",
+        "cap": 1000.0,
+        "decimals": 18,
+        "minter": "0x242752acA5c560457a3C49d17d6F7824a595af18",
+        "minterBalance": 2e-15,
+        "name": "Tasty Lobster Token",
+        "symbol": "TASLOB-45",
+        "totalSupply": 20.007
+    },
+    "id": "did:op:b07a8bb80242752ce164560ABCb6517DA90a4F65",
+    "price": {
+        "address": "0x2655b8A7357f4Bb4a8CB2170e196096aC8F0CDF9",
+        "datatoken": 20.00053958821312,
+        "ocean": 203901.91831905642,
+        "pools": [
+            "0x2655b8A7357f4Bb4a8CB2170e196096aC8F0CDF9"
+        ],
+        "type": "pool",
+        "value": 119739.44518819642
+    },
+    "proof": {
+        "created": "2020-10-27T14:17:47Z",
+        "creator": "0x242752acA5c560457a3C49d17d6F7824a595af18",
+        "signatureValue": "0x37520df7dd8831a6cab79de952ac259a80f1085991eae387265f71f7da0799d1",
+        "type": "AddressHash"
+    },
+    "publicKey": [
+        {
+            "id": "did:op:b07a8bb80242752ce164560ABCb6517DA90a4F65",
+            "owner": "0x242752acA5c560457a3C49d17d6F7824a595af18",
+            "type": "EthereumECDSAKey"
+        }
+    ],
+    "service": [
+        {
+            "attributes": {
+                "additionalInformation": {
+                    "copyrightHolder": "SwashData Tech Oy",
+                    "description": "[Swash](https://swashapp.io/) is creating the world\u2019s first [Data Union](https://medium.com/swashapp/weve-open-sourced-swash-to-make-data-unions-a-reality-7049e92c364b). It crowdsources users\u2019 surfing data through a browser plugin (available on Chrome, Firefox, Brave, Edge, and more) and shares profits with users. This lets Swash provide data buyers with unrivaled zero-party consumer data at scale, from all over the web, guaranteeing data quality and user consent. The increasing number of users will grow the value of Swash data assets over time.\n\n#### Use cases\nMarket intelligence, Consumer insights, E-commerce analytics, AI/ML, and Advertising optimisation\n\n#### UPDATE: November 8th 2020:\n\n-   Number of data points: 700K (+400k since last update)\n    \n-   Data Union members: 1500 (+500 since last update)\n    \n-   Geo coverage: Worldwide  \n\n#### Roadmap:\n\n-   New partnerships\n    \n-   New data categories\n    \n-   Expand to mobile data\n    \n-   Enable [compute-to-data](https://oceanprotocol.com/technology/compute-to-data)\n    \n-   Launch ads panel\n    \n-   Brand promotion campaigns\n    \n\n  \n#### \\### This dataset is updated frequently and new data points from new users and categories are added weekly.  \n  \n\n#### Current Data Categories  \n  \n\n**Search Data**\n\nOnline search trends data collected from all major online search engines.\n\n**Shopping Data**\n\nConsumer data and click feed from major shopping platforms, like Amazon and eBay. \n\n**News Data**\n\nUser browsing data on major news websites such as CNN and the Daily Mail.  \n  \n**Social Media Data**\n\nUser data generated on social media, including Facebook, Twitter, and YouTube.\n\n  \nPowered by [Streamr](https://streamr.network/), backed by [Outlier Ventures](https://outlierventures.io/)",
+                    "links": [
+                        {
+                            "contentLength": "33367",
+                            "contentType": "application/zip",
+                            "url": "https://swash-data-product.s3.eu-central-1.amazonaws.com/Archive/Swash+Products+Sample.zip"
+                        }
+                    ],
+                    "tags": [
+                        "consumer-marketing-data",
+                        "ecommerce-data",
+                        "click-stream",
+                        "alternative-data",
+                        "cookieless",
+                        "zero-party-data",
+                        "web-traffic-analytics",
+                        "market-intelligence-data"
+                    ],
+                    "termsAndConditions": true
+                },
+                "curation": {
+                    "isListed": true,
+                    "numVotes": 0,
+                    "rating": 0.0
+                },
+                "encryptedFiles": "0x04d41f571702032364f10973ade5a6e3753c409ad0f84317183918c126916b91652a519f48b360b498a53398441ec3010b4f3278874b63deb8ec22f6d5f219c40c77e24606a3bfdca64abfdc20fa3baca6ce643c84b273b2d049e57c3b265997808aa3ee0cafd546370ac7506d1243d3e4fe77e88fc12f487a2769e28c689043acf3fffa83f72ec40d8ce757968fd9e4bf28831956f438df67d7c4c14960a0e60bb74e334ae206913db274ca36e306fa8892ecc2076db458f5fb8d91aa05c3558b2cdf5c304a511122489687586d4001d3c19ffaf3924f7bda727e92cf1a30b2528116718a9b3a2d3106d320054bb19d652ebe2ee909e4c5a9d0a4f1fb3bdb088e417fba360e57ea2a25001bb78e97401f10965b5c3c0f38c00ed242fe650b4ae9d4",
+                "main": {
+                    "author": "SwashData Tech Oy",
+                    "dateCreated": "2020-10-27T14:17:23Z",
+                    "datePublished": "2020-11-08T21:57:44Z",
+                    "files": [
+                        {
+                            "contentLength": "72198391",
+                            "contentType": "application/zip",
+                            "index": 0
+                        }
+                    ],
+                    "license": "No License Specified",
+                    "name": "Swash - Consumer Browsing Data",
+                    "type": "dataset"
+                }
+            },
+            "index": 0,
+            "type": "metadata"
+        },
+        {
+            "attributes": {
+                "main": {
+                    "cost": "1",
+                    "creator": "0x242752acA5c560457a3C49d17d6F7824a595af18",
+                    "datePublished": "2020-10-27T14:17:23Z",
+                    "name": "dataAssetAccess",
+                    "timeout": 0
+                }
+            },
+            "index": 1,
+            "serviceEndpoint": "https://provider.mainnet.oceanprotocol.com",
+            "type": "access"
+        }
+    ],
+    "updated": "2020-11-08T21:57:44Z"
+}

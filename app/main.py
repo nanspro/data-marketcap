@@ -18,6 +18,8 @@ def get_datatokens():
     data = requests.get('https://aquarius.mainnet.oceanprotocol.com/api/v1/aquarius/assets/ddo')
     data = json.loads(data.content.decode('utf-8'))
     tokens = []
+    totalMarketCap = 0
+    totalVolume = 0
     for id in data:
         token = {}
         did = id
@@ -28,6 +30,8 @@ def get_datatokens():
         price = value["price"]["value"]
         volume = value["price"]["datatoken"] * price
         marketCap = price * circulatingSupply
+        totalMarketCap = totalMarketCap + marketCap
+        totalVolume = totalVolume + volume
         tags = value["service"][0]["attributes"]["additionalInformation"]
         if check_val(tags, "tags"):
             tags = tags["tags"]
@@ -40,7 +44,11 @@ def get_datatokens():
         token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "volume": volume, "tags": tags}
         tokens.append(token)
     # print(tokens)
-    return jsonify(tokens)
+    data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=usd&include_market_cap=true')
+    data = json.loads(data.content.decode('utf-8'))
+    oceanPrice = data["ocean-protocol"]["usd"]
+    oceanMarketCap = data["ocean-protocol"]["usd_market_cap"]
+    return jsonify(tokens, { "dataTokensMarketCap" : totalMarketCap, "dataTokensVolume" : totalVolume, "oceanPrice": oceanPrice, "oceanMarketCap": oceanMarketCap })
 
 @app.route('/datatoken/<did>')
 def get_token(did):
