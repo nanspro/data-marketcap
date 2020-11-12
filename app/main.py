@@ -74,10 +74,14 @@ def get_token(did):
     pools = data["price"]["pools"]
     totalOcean = data["price"]["ocean"]
     volume = data["price"]["datatoken"]
+
+    data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=usd&include_market_cap=true')
+    data = json.loads(data.content.decode('utf-8'))
+    oceanPrice = data["ocean-protocol"]["usd"]
     if (volume):
         priceOcean = totalOcean/volume
     else:
-        priceOcean = 0
+        priceOcean = price/oceanPrice
 
     token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "createdAt": createdAt, "supplyCap": supplyCap, "address": address, "description": description, "tags": tags, "author": author, "datasetName": datasetName, "pools": pools, "totalOcean": totalOcean, "priceOcean": priceOcean}
 
