@@ -25,3 +25,15 @@ Flask-Cors==3.0.9
 Jinja2==2.11.2
 gunicorn
 
+coloredlogs==14.0
+flask-swagger==0.2.14
+flask-swagger-ui==3.25.0
+oceandb-driver-interface==0.2.0
+oceandb-mongodb-driver==0.2.2
+oceandb-elasticsearch-driver==0.4.2
+PyYAML==5.3.1
+pytz==2020.1
+plecos==1.1.0
+ocean-lib==0.5.1
+eciespy
+
