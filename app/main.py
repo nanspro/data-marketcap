@@ -15,15 +15,15 @@ def check_val(dict, key):
 
 @app.route('/datatokens')
 def get_datatokens():
-    data = requests.get('https://aquarius.mainnet.oceanprotocol.com/api/v1/aquarius/assets/ddo')
-    data = json.loads(data.content.decode('utf-8'))
+    allData = requests.get('https://aquarius.mainnet.oceanprotocol.com/api/v1/aquarius/assets/ddo')
+    allData = json.loads(allData.content.decode('utf-8'))
     tokens = []
     totalMarketCap = 0
     totalVolume = 0
-    for id in data:
+    for data in allData:
         token = {}
-        did = id
-        value = dict(data[id])
+        did = data["id"]
+        value = data
         name = value["dataTokenInfo"]["name"]
         symbol = value["dataTokenInfo"]["symbol"]
         circulatingSupply = value["dataTokenInfo"]["totalSupply"]
