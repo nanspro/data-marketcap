@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python3 ./events-monitor-main.py
+python3 ./listener.py

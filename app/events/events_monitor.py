@@ -1,6 +1,6 @@
 #  Copyright 2020 Ocean Protocol Foundation
 #  SPDX-License-Identifier: Apache-2.0
-
+import datetime
 import logging
 import os
 import time
@@ -10,6 +10,7 @@ from json import JSONDecodeError
 from threading import Thread
 
 import elasticsearch
+import requests
 from eth_utils import remove_0x_prefix, add_0x_prefix
 from ocean_lib.config_provider import ConfigProvider
 from eth_account import Account
@@ -114,7 +115,10 @@ class EventsMonitor:
             logger.error(
                 f"Contract address {self._contract_address} is not a valid address. Events thread not starting")
             self._contract = None
-            return
+
+        self._purgatory_list = set()
+        self._purgatory_update_time = None
+
 
     @property
     def is_monitor_running(self):
@@ -150,7 +154,9 @@ class EventsMonitor:
 
     def run_monitor(self):
         first_update = self._updater.is_first_update_enabled()
-        logger.info(f'something {first_update}')
+        if bool(int(os.getenv('UPDATE_ALL_PURGATORY', 1)) == 1):
+            self._update_existing_assets()
+
         while True:
             try:
                 if not self._monitor_is_on:
@@ -162,12 +168,65 @@ class EventsMonitor:
                     first_update = False
 
                 self._updater.process_pool_events()
+                self._update_purgatory_list()
 
             except (KeyError, Exception) as e:
                 logger.error(f'Error processing event:')
                 logger.error(e)
 
             time.sleep(self._monitor_sleep_time)
+
+    def _update_existing_assets(self):
+        for asset in self._oceandb.list():
+            did = asset.get('id', None)
+            if not did or not did.startswith('did:op:'):
+                continue
+
+            purgatory = asset.get('isInPurgatory', 'false')
+            if not isinstance(purgatory, str):
+                purgatory = 'true' if purgatory is True else 'false'
+
+            asset['isInPurgatory'] = purgatory
+            if 'purgatoryData' in asset:
+                asset.pop('purgatoryData')
+            try:
+                self._oceandb.update(json.dumps(asset), did)
+            except Exception as e:
+                logger.warning(f'updating ddo {did} purgatory attribute failed: {e}')
+
+    def _get_reference_purgatory_list(self):
+        response = requests.get('https://raw.githubusercontent.com/oceanprotocol/list-purgatory/main/list-assets.json')
+        if response.status_code != requests.codes.ok:
+            return set()
+
+        return {(a['did'], a['reason']) for a in response.json() if a and 'did' in a}
+
+    def _update_purgatory_list(self):
+        now = int(datetime.datetime.now().timestamp())
+        if self._purgatory_update_time and (now - self._purgatory_update_time) < 3600:
+            return
+
+        self._purgatory_update_time = now
+        bad_list = self._get_reference_purgatory_list()
+        if not bad_list:
+            return
+
+        if self._purgatory_list == bad_list:
+            return
+
+        new_ids = bad_list.difference(self._purgatory_list)
+        self._purgatory_list = bad_list
+        for _id, reason in new_ids:
+            try:
+                asset = self._oceandb.read(_id)
+                asset['isInPurgatory'] = 'true'
+                if 'purgatoryData' in asset:
+                    asset.pop('purgatoryData')
+
+                self._oceandb.update(json.dumps(asset), _id)
+
+            except Exception:
+                pass
 
     def process_current_blocks(self):
         try:
@@ -304,6 +363,8 @@ class EventsMonitor:
             logger.error(f'New ddo has validation errors: {errors}')
             return False
 
+        _record['isInPurgatory'] = 'false'
+
         try:
             record_str = json.dumps(_record)
             self._oceandb.write(record_str, did)
@@ -379,6 +440,8 @@ class EventsMonitor:
         assert dt_address == add_0x_prefix(did[len('did:op:'):])
         if dt_address:
             _record['dataTokenInfo'] = get_datatoken_info(dt_address)
+
+        _record['isInPurgatory'] = asset.get('isInPurgatory', 'false')
 
         try:
             self._oceandb.update(json.dumps(_record), did)
