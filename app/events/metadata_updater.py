@@ -342,6 +342,7 @@ class MetadataUpdater:
                 logger.error(f'get_all_pools BFactory {bfactory.address}, fromBlock {_from}, toBlock{_from+chunk-1}: {e}')
             _from += chunk
 
+        print("get all pools", pools)
         return pools
 
     def do_single_update(self, asset):
@@ -393,9 +394,11 @@ class MetadataUpdater:
         self._oceandb.update(asset, did)
 
     def do_update(self):
+        print("helllo 1")
         did_prefix = self.DID_PREFIX
         prefix_len = len(did_prefix)
         pools = self.get_all_pools()
+        print(pools)
         dt_to_pool = dict()
         for pool_address in pools:
             pool = BPool(pool_address)
@@ -413,6 +416,7 @@ class MetadataUpdater:
 
             dt_to_pool[dt].append(pool_address)
 
+        print("helllo 2")
         frexchange_address = self.ex_contract.address
         for asset in self._get_all_assets():
             did = asset.get('id', None)
@@ -444,6 +448,8 @@ class MetadataUpdater:
                     'address': frexchange_address if price is not None else '',
                     'pools': []
                 }
+                print(price_dict)
+                print("helllo 3")
 
             else:
                 dt_reserve, ocn_reserve, price, pool_address = self._get_liquidity_and_price(pools, _dt_address)
@@ -455,6 +461,7 @@ class MetadataUpdater:
                     'address': pool_address,
                     'pools': pools
                 }
+            print("helllo 4")
 
             asset['price'] = price_dict
             try:

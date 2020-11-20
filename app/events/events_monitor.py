@@ -164,10 +164,14 @@ class EventsMonitor:
 
                 self.process_current_blocks()
                 if first_update:
+                    print("helllo do_update")
                     self._updater.do_update()
+                    print("helllo do_update 2")
                     first_update = False
-
+                
+                print("helllo process_pool_events")
                 self._updater.process_pool_events()
+                print("helllo process_pool_events 2")
                 self._update_purgatory_list()
 
             except (KeyError, Exception) as e:
@@ -436,6 +440,7 @@ class EventsMonitor:
             return
 
         _record['price'] = asset.get('price', {})
+        print("helllo inside process update ddo", _record['price'])
         dt_address = _record.get('dataToken')
         assert dt_address == add_0x_prefix(did[len('did:op:'):])
         if dt_address:
