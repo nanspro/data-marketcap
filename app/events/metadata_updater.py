@@ -321,12 +321,13 @@ class MetadataUpdater:
     def get_all_pools(self):
         print("helllo 2")
         bfactory = BFactory(self._addresses.get(BFactory.CONTRACT_NAME))
+        print(bfactory)
         event_name = 'BPoolRegistered'
         event = getattr(bfactory.events, event_name)
         latest_block = self._web3.eth.blockNumber
         print("helllo 2", latest_block)
         _from = self.bfactory_block
-        print("helllo 2", _from)
+        _from = 11247202
         chunk = 10000
         pools = []
         while _from < latest_block:
