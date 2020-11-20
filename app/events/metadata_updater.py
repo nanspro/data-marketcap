@@ -327,7 +327,7 @@ class MetadataUpdater:
         latest_block = self._web3.eth.blockNumber
         print("helllo 2", latest_block)
         _from = self.bfactory_block
-        _from = 11247202
+        _from = 11105527 
         chunk = 10000
         pools = []
         while _from < latest_block:
