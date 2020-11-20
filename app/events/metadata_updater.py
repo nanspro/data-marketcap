@@ -319,11 +319,14 @@ class MetadataUpdater:
             return None, None
 
     def get_all_pools(self):
+        print("helllo 2")
         bfactory = BFactory(self._addresses.get(BFactory.CONTRACT_NAME))
         event_name = 'BPoolRegistered'
         event = getattr(bfactory.events, event_name)
         latest_block = self._web3.eth.blockNumber
+        print("helllo 2", latest_block)
         _from = self.bfactory_block
+        print("helllo 2", _from)
         chunk = 10000
         pools = []
         while _from < latest_block:
@@ -334,14 +337,17 @@ class MetadataUpdater:
                 from_block=_from,
                 to_block=_from+chunk-1
             )
+            print("helllo 2", event_filter)
             try:
                 logs = event_filter.get_all_entries(max_tries=10)
+                print("helllo 2", logs)
                 logs = sorted(logs, key=lambda l: l.blockNumber)
+                print("helllo 2", logs)
                 pools.extend([l.args.bpoolAddress for l in logs])
             except ValueError as e:
                 logger.error(f'get_all_pools BFactory {bfactory.address}, fromBlock {_from}, toBlock{_from+chunk-1}: {e}')
             _from += chunk
-
+        print("helllo 2 end")
         print("get all pools", pools)
         return pools
 
@@ -396,9 +402,10 @@ class MetadataUpdater:
     def do_update(self):
         print("helllo 1")
         did_prefix = self.DID_PREFIX
+        print("helllo 1", did_prefix)
         prefix_len = len(did_prefix)
         pools = self.get_all_pools()
-        print(pools)
+        print("helllo 1", pools)
         dt_to_pool = dict()
         for pool_address in pools:
             pool = BPool(pool_address)

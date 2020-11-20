@@ -12,6 +12,8 @@ from app.events.util import get_artifacts_path
 from app.log import setup_logging
 
 logger = logging.getLogger(__name__)
+import urllib3
+urllib3.disable_warnings()
 
 
 def run_events_monitor():
