@@ -20,15 +20,16 @@
         "totalSupply": 20.007
     },
     "id": "did:op:b07a8bb80242752ce164560ABCb6517DA90a4F65",
+    "isInPurgatory": "false",
     "price": {
         "address": "0x2655b8A7357f4Bb4a8CB2170e196096aC8F0CDF9",
-        "datatoken": 20.00053958821312,
-        "ocean": 203901.91831905642,
+        "datatoken": 20.002053533668906,
+        "ocean": 46786.60546073893,
         "pools": [
             "0x2655b8A7357f4Bb4a8CB2170e196096aC8F0CDF9"
         ],
         "type": "pool",
-        "value": 119739.44518819642
+        "value": 27472.32111557841
     },
     "proof": {
         "created": "2020-10-27T14:17:47Z",
@@ -48,7 +49,7 @@
             "attributes": {
                 "additionalInformation": {
                     "copyrightHolder": "SwashData Tech Oy",
-                    "description": "[Swash](https://swashapp.io/) is creating the world\u2019s first [Data Union](https://medium.com/swashapp/weve-open-sourced-swash-to-make-data-unions-a-reality-7049e92c364b). It crowdsources users\u2019 surfing data through a browser plugin (available on Chrome, Firefox, Brave, Edge, and more) and shares profits with users. This lets Swash provide data buyers with unrivaled zero-party consumer data at scale, from all over the web, guaranteeing data quality and user consent. The increasing number of users will grow the value of Swash data assets over time.\n\n#### Use cases\nMarket intelligence, Consumer insights, E-commerce analytics, AI/ML, and Advertising optimisation\n\n#### UPDATE: November 8th 2020:\n\n-   Number of data points: 700K (+400k since last update)\n    \n-   Data Union members: 1500 (+500 since last update)\n    \n-   Geo coverage: Worldwide  \n\n#### Roadmap:\n\n-   New partnerships\n    \n-   New data categories\n    \n-   Expand to mobile data\n    \n-   Enable [compute-to-data](https://oceanprotocol.com/technology/compute-to-data)\n    \n-   Launch ads panel\n    \n-   Brand promotion campaigns\n    \n\n  \n#### \\### This dataset is updated frequently and new data points from new users and categories are added weekly.  \n  \n\n#### Current Data Categories  \n  \n\n**Search Data**\n\nOnline search trends data collected from all major online search engines.\n\n**Shopping Data**\n\nConsumer data and click feed from major shopping platforms, like Amazon and eBay. \n\n**News Data**\n\nUser browsing data on major news websites such as CNN and the Daily Mail.  \n  \n**Social Media Data**\n\nUser data generated on social media, including Facebook, Twitter, and YouTube.\n\n  \nPowered by [Streamr](https://streamr.network/), backed by [Outlier Ventures](https://outlierventures.io/)",
+                    "description": "[Swash](https://swashapp.io/) is creating the world\u2019s first [Data Union](https://medium.com/swashapp/weve-open-sourced-swash-to-make-data-unions-a-reality-7049e92c364b).             It crowdsources users\u2019 surfing data through a browser plugin (available on Chrome, Firefox, Brave, Edge, and more) and shares profits with users.            This lets Swash provide data buyers with unrivaled zero-party consumer data at scale, from all over the web, guaranteeing data quality and user consent.            The increasing number of users will grow the value of Swash data assets over time.            \n\n#### Use cases\nMarket intelligence, Consumer insights, E-commerce analytics, AI/ML, and Advertising optimisation            \n\n#### UPDATE: November 24th 2020:\n\n-   Number of data points: 1000K (+200k since last update)            \n\n-   Data Union members: 1800 (+200 since last update)\n\n-   Geo coverage: Worldwide            \n\n#### Roadmap:\n\n-   New partnerships\n\n-   New data categories\n\n-   Expand to mobile data\n\n-   Enable [compute-to-data](https://oceanprotocol.com/technology/compute-to-data)\n\n-   Launch ads panel\n\n-   Brand promotion campaigns            \n\n\n\n#### \\### This dataset is updated frequently and new data points from new users and categories are added weekly.            \n\n\n#### Current Data Categories\n\n\n**Search Data**\n\nOnline search trends data collected from all major online search engines.            \n\n**Shopping Data**\n\nConsumer data and click feed from major shopping platforms, like Amazon and eBay.            \n\n**News Data**\n\nUser browsing data on major news websites such as CNN and the Daily Mail.            \n\n**Social Media Data**\n\nUser data generated on social media, including Facebook, Twitter, and YouTube.            \n\n\nPowered by [Streamr](https://streamr.network/), backed by [Outlier Ventures](https://outlierventures.io/)",
                     "links": [
                         {
                             "contentLength": "33367",
@@ -77,7 +78,7 @@
                 "main": {
                     "author": "SwashData Tech Oy",
                     "dateCreated": "2020-10-27T14:17:23Z",
-                    "datePublished": "2020-11-08T21:57:44Z",
+                    "datePublished": "2020-11-23T22:58:31Z",
                     "files": [
                         {
                             "contentLength": "72198391",
@@ -108,5 +109,5 @@
             "type": "access"
         }
     ],
-    "updated": "2020-11-08T21:57:44Z"
+    "updated": "2020-11-23T22:58:31Z"
 }

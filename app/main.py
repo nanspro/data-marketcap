@@ -19,7 +19,13 @@ def get_datatokens():
     allData = json.loads(allData.content.decode('utf-8'))
     tokens = []
     totalMarketCap = 0
-    totalVolume = 0
+    # totalVolume = 0
+    totalLiquidityOcean = 0
+    totalLiquidity = 0
+    data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=usd&include_market_cap=true')
+    data = json.loads(data.content.decode('utf-8'))
+    oceanPrice = data["ocean-protocol"]["usd"]
+    oceanMarketCap = data["ocean-protocol"]["usd_market_cap"]
     for data in allData:
         token = {}
         did = data["id"]
@@ -27,11 +33,18 @@ def get_datatokens():
         name = value["dataTokenInfo"]["name"]
         symbol = value["dataTokenInfo"]["symbol"]
         circulatingSupply = value["dataTokenInfo"]["totalSupply"]
-        price = value["price"]["value"]
-        volume = value["price"]["datatoken"] * price
+        priceOcean = value["price"]["value"]
+        price = priceOcean * oceanPrice
+        lockedOcean = data["price"]["ocean"] # ocean tokens in liquidity pool
+        poolTokens = data["price"]["datatoken"]
+        liquidity = poolTokens * price
+
+        # volume = value["price"]["datatoken"] * price
         marketCap = price * circulatingSupply
         totalMarketCap = totalMarketCap + marketCap
-        totalVolume = totalVolume + volume
+        totalLiquidityOcean = lockedOcean + totalLiquidityOcean
+        totalLiquidity = totalLiquidity + liquidity
+        # totalVolume = totalVolume + volume
         tags = value["service"][0]["attributes"]["additionalInformation"]
         if check_val(tags, "tags"):
             tags = tags["tags"]
@@ -41,14 +54,10 @@ def get_datatokens():
         # description = value["service"]["attributes"]["additionalInformation"]["description"]
         # author = value["service"]["attributes"]["main"]["author"]
 
-        token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "volume": volume, "tags": tags}
+        token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "tags": tags, "liquidityOcean": lockedOcean}
         tokens.append(token)
     # print(tokens)
-    data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=usd&include_market_cap=true')
-    data = json.loads(data.content.decode('utf-8'))
-    oceanPrice = data["ocean-protocol"]["usd"]
-    oceanMarketCap = data["ocean-protocol"]["usd_market_cap"]
-    return jsonify(tokens, { "dataTokensMarketCap" : totalMarketCap, "dataTokensVolume" : totalVolume, "oceanPrice": oceanPrice, "oceanMarketCap": oceanMarketCap })
+    return jsonify(tokens, { "dataTokensMarketCap" : totalMarketCap, "dataTokensLiquidity" : totalLiquidity, "totalLiquidityOcean": totalLiquidityOcean, "oceanPrice": oceanPrice, "oceanMarketCap": oceanMarketCap })
 
 @app.route('/datatoken/<did>')
 def get_token(did):
@@ -57,12 +66,11 @@ def get_token(did):
     token = {}
     createdAt = data["created"]
     address = data["dataToken"]
-    supplyCap = data["dataTokenInfo"]["cap"]
+    maxSupply = data["dataTokenInfo"]["cap"]
     name = data["dataTokenInfo"]["name"]
     symbol = data["dataTokenInfo"]["symbol"]
     circulatingSupply = data["dataTokenInfo"]["totalSupply"]
-    price = data["price"]["value"]
-    marketCap = price * circulatingSupply
+    priceOcean = data["price"]["value"]
     description = data["service"][0]["attributes"]["additionalInformation"]["description"]
     tags = data["service"][0]["attributes"]["additionalInformation"]
     if check_val(tags, "tags"):
@@ -72,18 +80,18 @@ def get_token(did):
     author = data["service"][0]["attributes"]["main"]["author"]
     datasetName = data["service"][0]["attributes"]["main"]["name"]
     pools = data["price"]["pools"]
-    totalOcean = data["price"]["ocean"]
-    volume = data["price"]["datatoken"]
+    totalOcean = data["price"]["ocean"] # ocean tokens in liquidity pool
+    # volume = data["price"]["datatoken"]
 
     data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=usd&include_market_cap=true')
     data = json.loads(data.content.decode('utf-8'))
     oceanPrice = data["ocean-protocol"]["usd"]
-    if (volume):
-        priceOcean = totalOcean/volume
-    else:
-        priceOcean = price/oceanPrice
+    price = priceOcean * oceanPrice
 
-    token = {"did": did, "name": name, "symbol": symbol, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "createdAt": createdAt, "supplyCap": supplyCap, "address": address, "description": description, "tags": tags, "author": author, "datasetName": datasetName, "pools": pools, "totalOcean": totalOcean, "priceOcean": priceOcean}
+    marketCap = priceOcean * circulatingSupply * oceanPrice
+    fullyDilutedValuation = priceOcean * maxSupply * oceanPrice
+
+    token = {"did": did, "name": name, "symbol": symbol, "maxSupply": maxSupply, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "createdAt": createdAt, "address": address, "description": description, "tags": tags, "author": author, "datasetName": datasetName, "pools": pools, "liquidityOcean": totalOcean, "priceOcean": priceOcean, "fullyDilutedValuation": fullyDilutedValuation}
 
     # Fetch from aquarius elasticsearch events
     return jsonify(token)
