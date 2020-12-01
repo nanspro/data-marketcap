@@ -24,26 +24,26 @@ def get_datatokens():
     totalLiquidity = 0
     data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=usd&include_market_cap=true')
     data = json.loads(data.content.decode('utf-8'))
-    oceanPrice = data["ocean-protocol"]["usd"]
-    oceanMarketCap = data["ocean-protocol"]["usd_market_cap"]
+    oceanPrice = data["ocean-protocol"]["usd"] # ocean token price
+    oceanMarketCap = data["ocean-protocol"]["usd_market_cap"] # ocean protocol marketcap
     for data in allData:
         token = {}
         did = data["id"]
         value = data
         name = value["dataTokenInfo"]["name"]
         symbol = value["dataTokenInfo"]["symbol"]
-        circulatingSupply = value["dataTokenInfo"]["totalSupply"]
-        priceOcean = value["price"]["value"]
-        price = priceOcean * oceanPrice
+        circulatingSupply = value["dataTokenInfo"]["totalSupply"] # how many tokens in circulation
+        priceOcean = value["price"]["value"] # price of datatoken in ocean
+        price = priceOcean * oceanPrice # price of datatoken in usd
         lockedOcean = data["price"]["ocean"] # ocean tokens in liquidity pool
         poolTokens = data["price"]["datatoken"]
         liquidity = poolTokens * price
 
         # volume = value["price"]["datatoken"] * price
         marketCap = price * circulatingSupply
-        totalMarketCap = totalMarketCap + marketCap
-        totalLiquidityOcean = lockedOcean + totalLiquidityOcean
-        totalLiquidity = totalLiquidity + liquidity
+        totalMarketCap = totalMarketCap + marketCap # total marketCap of ocean datatokens
+        totalLiquidityOcean = lockedOcean + totalLiquidityOcean # total oceans locked in liquidity pools of datatokens
+        totalLiquidity = totalLiquidity + liquidity # sum of total data tokens in liquidity pools * their price (basically how much in USD is datatokens in liquidity pools worth)
         # totalVolume = totalVolume + volume
         tags = value["service"][0]["attributes"]["additionalInformation"]
         if check_val(tags, "tags"):
@@ -66,7 +66,7 @@ def get_token(did):
     token = {}
     createdAt = data["created"]
     address = data["dataToken"]
-    maxSupply = data["dataTokenInfo"]["cap"]
+    maxSupply = data["dataTokenInfo"]["cap"] # how many datatokens will ever be (at max)
     name = data["dataTokenInfo"]["name"]
     symbol = data["dataTokenInfo"]["symbol"]
     circulatingSupply = data["dataTokenInfo"]["totalSupply"]
@@ -80,7 +80,7 @@ def get_token(did):
     author = data["service"][0]["attributes"]["main"]["author"]
     datasetName = data["service"][0]["attributes"]["main"]["name"]
     pools = data["price"]["pools"]
-    totalOcean = data["price"]["ocean"] # ocean tokens in liquidity pool
+    totalOcean = data["price"]["ocean"] # total no of ocean tokens in liquidity pool
     # volume = data["price"]["datatoken"]
 
     data = requests.get('https://api.coingecko.com/api/v3/simple/price?ids=ocean-protocol&vs_currencies=usd&include_market_cap=true')
