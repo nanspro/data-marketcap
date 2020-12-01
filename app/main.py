@@ -90,8 +90,13 @@ def get_token(did):
 
     marketCap = priceOcean * circulatingSupply * oceanPrice
     fullyDilutedValuation = priceOcean * maxSupply * oceanPrice
+    price_history = []
+    if pools[0]:
+        data = requests.get('https://aquarius.mainnet.oceanprotocol.com/api/v1/aquarius/pools/history/' + pools[0])
+        data = json.loads(data.content.decode('utf-8'))
+        price_history = data["oceanAddRemove"]
 
-    token = {"did": did, "name": name, "symbol": symbol, "maxSupply": maxSupply, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "createdAt": createdAt, "address": address, "description": description, "tags": tags, "author": author, "datasetName": datasetName, "pools": pools, "liquidityOcean": totalOcean, "priceOcean": priceOcean, "fullyDilutedValuation": fullyDilutedValuation}
+    token = {"did": did, "name": name, "symbol": symbol, "maxSupply": maxSupply, "circulatingSupply": circulatingSupply, "price": price, "marketCap": marketCap, "createdAt": createdAt, "address": address, "description": description, "tags": tags, "author": author, "datasetName": datasetName, "pools": pools, "liquidityOcean": totalOcean, "priceOcean": priceOcean, "fullyDilutedValuation": fullyDilutedValuation, "priceHistory": price_history}
 
     # Fetch from aquarius elasticsearch events
     return jsonify(token)
